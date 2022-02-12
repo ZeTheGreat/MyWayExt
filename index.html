@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="index.css">
+  <link rel="icon" href="img/icon_16.png">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>CI&T - Monitoring Center</title>
+</head>
+
+<body>
+
+  <div id="root">
+    <div id="logo">
+      <div id="logo-img"></div>
+      <label class="title"> Monitoring Center</label>
+    </div>
+    <ul id="white-list">
+    </ul>
+
+    <form id="add-url">
+      <div id="name-field" class="field">
+        <label>Title: </label><input id="name" />
+        <div id="error-row">
+          <spam id="error-info-name"></spam>
+        </div>
+      </div>
+
+      <div id="url-field" class="field">
+        <label>URL: </label><input id="url" /><i class="copy-icon material-icons">content_copy</i>
+        <div id="error-row">
+          <spam id="error-info-url"></spam>
+        </div>
+      </div>
+
+      <div id="description-field" class="field">
+        <label>Desc: </label><input id="description" ></input>
+        <div id="error-row">
+          <spam id="error-info-desc"></spam>
+        </div>
+      </div>
+
+
+      <button id="button-add" class="background-secondary">ADD</button>
+      <button id="button-start" class="background-primary">START APP</button>
+    </form>
+
+    <div id="info-url">
+      <div>
+        <p>For more options, go to
+          <a target="_blank" href="page/options/options.html">
+            Settings
+          </a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+  <script src="../../colors.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>

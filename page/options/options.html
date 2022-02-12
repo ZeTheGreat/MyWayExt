@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MC - Options</title>
+  <link rel="stylesheet" type="text/css" href="./options.css">
+  <link rel="icon" href="../../img/icon_16.png">
+</head>
+
+<body>
+  <div id="root" class="container">
+
+    <div id="logo">
+      <div id="logo-img"></div>
+      <label class="title"> Monitoring Center - Options</label>
+    </div>
+
+    <div id="nav-bar" class="row">
+
+      <ul id="menu" class="row">
+        <li><a href="#style">Styles</a></li>
+        <li><a href="#settings">Settings</a></li>
+      </ul>
+
+    </div>
+
+    <div id="info">
+
+      <div class="session" id="style">
+        <h1>Styles</h1>
+        <ul>
+          <li>
+            <label>Colors:</label> <br />
+
+            <select id="colors-select">
+            </select>
+          </li>
+        </ul>
+      </div>
+
+      <div class="session" id="settings">
+        <h1>Settings</h1>
+
+        <ul>
+          <li>
+            <label>Import:</label><br />
+            <label id="import-info"></label><br />
+            <textarea id="import-text" placeholder="paste your export here"></textarea><br />
+            <button id="import-button">Import</button>
+          </li>
+          <li>
+            <label>Export:</label><br />
+            <textarea id="export-text" placeholder="copy your export here"></textarea><br />
+            <button id="export-button">Export</button>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  <script src="../../colors.js"></script>
+  <script src="./options.js"></script>
+</body>
+
+</html>

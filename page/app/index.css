@@ -1,0 +1,165 @@
+html {
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  margin: 0px;
+  background-color: var(--primary-color);
+  height: 100%;
+}
+
+iframe {
+  border: none;
+}
+
+button,
+input {
+  outline: none;
+}
+
+#menu {
+  display: inline-block;
+}
+
+.iframe {
+  display: none;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.h100 {
+  height: 100%;
+}
+
+.container {
+  margin-top: 40px;
+  padding: 20px 0px;
+  background-color: white;
+}
+
+div#nav-bar li.ui-state-active {
+  background-color: var(--menu-color);
+  border-color: var(--gray2);
+}
+
+.ui-state-active .active {
+  color: var(--menu-color);
+  border-bottom: solid 5px var(--menu-color);
+  transition: all ease-in-out 0.2s;
+}
+.deactive {
+  color: var(--menu-color);
+  border-bottom: solid 0px var(--menu-color);
+  transition: all ease-in-out 0.2s;
+}
+.linkHeader {
+  text-overflow: ellipsis;
+  max-width: 250px;
+  overflow: hidden;
+  white-space: nowrap;
+  outline: none;
+}
+#root {
+  background-color: white;
+  padding: 40px 0px;
+  min-height: 100%;
+}
+
+#info {
+  margin: 0px 5px 5px 5px;
+  height: 100%;
+  background-color: white;
+  overflow-y: auto;
+}
+
+#nav-bar {
+  margin: 0 5px 10px 5px;
+  box-shadow: 0 6px 4px -4px var(--gray1-s);
+  height: 100%;
+  border-radius: 3px;
+  border: 0px !important;
+  padding-top: 0px;
+}
+
+#nav-bar ul {
+  list-style: none;
+  margin: 0px 0px 0px 0;
+  padding: 0px;
+  max-width: 100%;
+  min-width: 100%;
+  overflow-x: visible;
+  overflow-y: hidden;
+}
+
+#nav-bar ul li {
+  font-weight: 600;
+  font-size: 20px;
+  outline: none;
+}
+
+#flow-control {
+  text-align: right;
+  display: inline-block;
+  width: 29.5%;
+  margin-bottom: -10px;
+}
+
+#flow-control > div > span {
+  font-size: 20px;
+}
+
+#flow-control > div > label {
+  font-size: 20px;
+  display: block;
+  text-align-last: justify;
+}
+
+#flow-control > div {
+  background-color: var(--gray-s);
+  border-radius: 2px;
+  display: inline-block;
+  padding: 10px;
+}
+
+#input-time {
+  width: 80px;
+  height: 42px;
+  font-size: 26px;
+  cursor: pointer;
+  contain: content;
+}
+
+#play {
+  height: 48px;
+  width: 48px;
+  font-size: 26px;
+  text-align: center;
+  cursor: pointer;
+  contain: content;
+  margin-left: 20px;
+  margin-top: 5px;
+}
+
+#logo {
+  float: left;
+  width: 70%;
+}
+
+#logo-img {
+  margin-left: 20px;
+  display: inline-block;
+  background-image: var(--url-login);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 120px;
+  height: 46px;
+}
+
+.title {
+  font-size: 50px;
+  margin-left: 10px;
+  display: inline;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>MC - Dashboard</title>
+  <link rel="stylesheet" href="./index.css" />
+  <link rel="icon" href="../../img/icon_16.png">
+  <link rel="stylesheet" href="/jquery/jquery-ui.min.css">
+  <script src="/jquery/jquery.js"></script>
+  <script src="/jquery/jquery-ui.min.js"></script>
+</head>
+
+<body>
+  <div id="root" class="container">
+    <div id="header">
+
+      <div id="logo">
+        <div id="logo-img"></div>
+        <label class="title"> Monitoring Center</label>
+      </div>
+
+      <div id="flow-control">
+        <div>
+          <label> Carousel </label>
+          <button id="play">▶</button>
+          <input id="input-time" maxlength="3" placeholder="10" type="number" />
+          <span>s</span>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div id="nav-bar" class="row">
+
+      <ul id="menu" class="row"></ul>
+
+    </div>
+    <div id="info"></div>
+  </div>
+  <script src="../../colors.js"></script>
+  <script src="./index.js"></script>
+</body>
+
+</html>
