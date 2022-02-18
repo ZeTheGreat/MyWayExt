@@ -64,9 +64,9 @@ chrome.runtime.onMessage.addListener(({ message, type }, _, sendResponse) => {
       for (index in message) {
         const el = message[index];
         const i = index * 1;
-        if (Object.keys(el).length !== 3)
+        if (Object.keys(el).length !== 4)
           return sendResponse({
-            message: `The ${i + 1}º object of white list must have three keys`,
+            message: `The ${i + 1}º object of white list must have four keys (desc, active, url, name)`,
           });
         if (typeof el.name !== "string")
           return sendResponse({
@@ -89,9 +89,10 @@ chrome.runtime.onMessage.addListener(({ message, type }, _, sendResponse) => {
     } else sendResponse({ message: "Bad Request" });
   } else {
     // Func -*- Func -*- Func -*- Func -*- Func -*- Func -*- Func -*-
-    const { name: nameNew, url: urlNew } = message;
-    const isInListName = PAGE_LIST.some(({ name }) => name === nameNew);
-    const isInListUrl = PAGE_LIST.some(({ url }) => url === urlNew);
+    const { name: newName, url: newUrl, oldName, desc: newDesc } = message;
+    const isInListOldName = PAGE_LIST.some(({ name }) => name === oldName);
+    const isInListName = PAGE_LIST.some(({ name }) => name === newName);
+    const isInListUrl = PAGE_LIST.some(({ url }) => url === newUrl);
     // Add -*- Add -*- Add -*- Add -*- Add -*- Add -*- Add -*- Add -*-
     if (type === "add") {
       if (isInListName)
@@ -108,14 +109,14 @@ chrome.runtime.onMessage.addListener(({ message, type }, _, sendResponse) => {
           spam: "spamErrorUrl",
           input: "inputUrl",
         });
-      if (!URL_OR_EMPTY_REGEX.test(urlNew))
+      if (!URL_OR_EMPTY_REGEX.test(newUrl))
         return sendResponse({
           message: "Invalid url",
           error: true,
           spam: "spamErrorUrl",
           input: "inputUrl",
         });
-      PAGE_LIST.push({ ...message });
+        PAGE_LIST.push({ ...message });
     }
     // Del -*- Del -*- Del -*- Del -*- Del -*- Del -*- Del -*- Del -*-
     else if (type === "del") {
@@ -124,7 +125,38 @@ chrome.runtime.onMessage.addListener(({ message, type }, _, sendResponse) => {
           message: "This name does not exist's in list",
           error: true,
         });
-      PAGE_LIST = PAGE_LIST.filter(({ name }) => name !== nameNew);
+      PAGE_LIST = PAGE_LIST.filter(({ name }) => name !== newName);
+    }
+    // Upt -*- Upt -*- Upt -*- Upt -*- Upt -*- Upt -*- Upt -*- Upt -*-
+    else if (type === "upt") {
+      if (!isInListOldName)
+        return sendResponse({
+          message: "This name does not exist's in list",
+          error: true,
+        });
+      if (isInListName && oldName !== newName)
+        return sendResponse({
+          message: "New Name is already in use",
+          error: true,
+          spam: "spamErrorName",
+          input: "inputName",
+        });
+      if (!URL_OR_EMPTY_REGEX.test(newUrl))
+        return sendResponse({
+          message: "Invalid url",
+          error: true,
+          spam: "spamErrorUrl",
+          input: "inputUrl",
+        });
+      PAGE_LIST = PAGE_LIST.map((object) => {
+        if(object.name === oldName){
+          object.name = newName
+          object.url = newUrl
+          object.desc = newDesc
+          message = object
+        }
+        return object
+      });
     }
     // Vis -*- Vis -*- Vis -*- Vis -*- Vis -*- Vis -*- Vis -*- Vis -*-
     else if (type === "vis") {
@@ -135,7 +167,7 @@ chrome.runtime.onMessage.addListener(({ message, type }, _, sendResponse) => {
         });
       PAGE_LIST = PAGE_LIST.map((obj) => {
         const { name, active } = obj;
-        if (name === nameNew) {
+        if (name === newName) {
           obj.active = !active;
         }
         return obj;
