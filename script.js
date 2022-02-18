@@ -18,25 +18,32 @@ const cHandler = {
   copyIcon: document.querySelector(".copy-icon"),
 };
 
-function addUrlList(newList) {
-  newList.forEach(({ name, url, active }) => {
+function renderUrlList(newList) {
+  newList.forEach(({ name, url, desc, active }) => {
     const newRow = document.createElement("li");
     const delIcon = document.createElement("i");
     const visIcon = document.createElement("i");
+    const uptIcon = document.createElement("i");
 
     delIcon.classList.add("material-icons");
     visIcon.classList.add("material-icons");
+    uptIcon.classList.add("material-icons");
 
     delIcon.classList.add("ex");
     visIcon.classList.add("vs");
+    uptIcon.classList.add("up");
 
     delIcon.innerHTML = "close";
     visIcon.innerHTML = active ? "visibility" : "visibility_off";
+    uptIcon.innerHTML = "edit";
 
     newRow.appendChild(delIcon);
     newRow.appendChild(visIcon);
+    newRow.appendChild(uptIcon);
 
     newRow.innerHTML += `<label class="name-lbl">${name}</label> <label>|</label> <label class="url-lbl">${url}</label>`;
+
+    newRow.description = desc
 
     cHandler.whiteList.appendChild(newRow);
   });
@@ -84,7 +91,7 @@ function hideError(spam, input) {
 chrome.runtime.sendMessage(
   { message: "__fillWhiteList__", type: "sys" },
   ({ message }) => {
-    addUrlList(message);
+    renderUrlList(message);
   }
 );
 
@@ -94,7 +101,7 @@ cHandler.startButton.addEventListener("click", (ev) => {
   window.open("/page/app/index.html");
 });
 
-// Add URL -*- Add URL -*- Add URL -*- Add URL -*- Add URL -*- Add URL
+
 cHandler.addButton.addEventListener("click", (ev) => {
   ev.preventDefault();
 
@@ -109,6 +116,39 @@ cHandler.addButton.addEventListener("click", (ev) => {
 
   hideError(cHandler.spamErrorName, cHandler.inputName);
 
+  // upt URL -*- upt URL -*- upt URL -*- upt URL -*- upt URL -*- upt URL
+  if( cHandler.addButton.innerText === "UPDATE" ){
+    const selectedElement = cHandler.helperHandle
+    const children = selectedElement.children;
+    const label = findInLiByClass(children, "name-lbl");
+
+    return chrome.runtime.sendMessage(
+      { message: { 
+        oldName: label.innerHTML, 
+        name: cHandler.inputName.value, 
+        url: cHandler.inputUrl.value,
+        desc: cHandler.inputDesc.value
+      }, type: "upt" },
+      ({message, error, spam, input}) => {
+        if (error) {
+          return showError(message, cHandler[spam], cHandler[input]);
+        }
+        hideError(cHandler.spamErrorUrl, cHandler.inputUrl);
+        hideError(cHandler.spamErrorName, cHandler.inputName);
+        console.log(message)
+        delUrlList([selectedElement]);
+        renderUrlList([message]);
+
+        cHandler.inputUrl.value = "";
+        cHandler.inputName.value = "";
+        cHandler.inputDesc.value = "";
+        cHandler.addButton.innerText = "ADD";
+        cHandler.helperHandle = "";
+      }
+    );   
+  }
+
+  // Add URL -*- Add URL -*- Add URL -*- Add URL -*- Add URL -*- Add URL
   return chrome.runtime.sendMessage(
     { message: { name, url, desc, active }, type: "add" },
     ({ message, error, spam, input }) => {
@@ -118,7 +158,7 @@ cHandler.addButton.addEventListener("click", (ev) => {
 
       hideError(cHandler.spamErrorUrl, cHandler.inputUrl);
       hideError(cHandler.spamErrorName, cHandler.inputName);
-      addUrlList([message]);
+      renderUrlList([message]);
 
       cHandler.inputUrl.value = "";
       cHandler.inputName.value = "";
@@ -148,9 +188,17 @@ cHandler.whiteList.addEventListener("click", ({ target }) => {
         () => visUrlList([parentElement])
       );
     }
+    if (target.classList.contains("up")) {
+      cHandler.inputName.value = label.innerText;
+      cHandler.inputUrl.value = url.innerText;
+      cHandler.inputDesc.value = parentElement.description;
+      cHandler.addButton.innerText = 'UPDATE';
+      cHandler.helperHandle = parentElement;
+    }
   } else if (target.tagName === "LABEL" || target.tagName === "LI") {
     cHandler.inputName.value = label.innerText;
     cHandler.inputUrl.value = url.innerText;
+    cHandler.inputDesc.value = parentElement.description;
   }
 });
 
